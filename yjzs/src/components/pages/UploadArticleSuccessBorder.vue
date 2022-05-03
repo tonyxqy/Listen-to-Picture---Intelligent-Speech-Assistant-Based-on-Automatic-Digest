@@ -16,7 +16,7 @@
             <span class="iconfont">&#xe608;</span>
             <h4>思维导图</h4>
             <p>使用Texttiling算法进行文本的分段处理，这一算法通过将文章视作词汇流的方式，认为人们在讨论特定主题需要使用一些相关度较高的词汇，当主题产生变化时对应部分的词汇也会随之产生变化。通过d3.js方法构造思维导图</p>
-            <a href="#">Learn More</a>
+            <a href="#" @click="getswdt">点击获取</a>
             <span class="label">New</span>
           </div>
         </div>
@@ -65,6 +65,28 @@ export default {
         var newPage = window.open("about:blank", "_blank");
         //将后台传过来的html页面写到新打开的浏览器窗口中显示
         newPage.document.write(response.data);
+      });
+    },
+  getswdt() {
+      this.loading = true;
+      var that = this;
+      this.uploaddata.id = JSON.parse(localStorage.getItem("upload"));
+      console.log(this.uploaddata);
+      axios({
+        method: "POST",
+        url: "http://localhost:3000/admin/getswdt",
+        headers: {
+          key: "Content-Type",
+          value: "application/x-www-form-urlencoded",
+          type: "text"
+        },
+        data: that.uploaddata
+      }).then(response => {
+        console.log(response);
+        this.loading = false;
+        // var newPage = window.open("about:blank", "_blank");
+        // //将后台传过来的html页面写到新打开的浏览器窗口中显示
+        // newPage.document.write(response.data);
       });
     }
   }

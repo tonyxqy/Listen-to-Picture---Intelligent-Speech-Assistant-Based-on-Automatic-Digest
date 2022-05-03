@@ -360,6 +360,7 @@ admin.post('/gettupu',require('./admin/gettupu'))
 admin.post('/getwords',require('./admin/getwords'))
 admin.post('/checktx',require('./admin/checktx'))
 admin.post('/getxsjc',require('./admin/getxsjc'))
+admin.post('/getswdt',require('./admin/getswdt'))
 
 // 通过client对象调用想要访问的接口，需要传入请求对象以及响应回调函数
 
