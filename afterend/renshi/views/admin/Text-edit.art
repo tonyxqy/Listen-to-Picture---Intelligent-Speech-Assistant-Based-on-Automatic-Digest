@@ -1,0 +1,97 @@
+{{extend './common/layout.art'}}
+
+{{block 'main'}}
+    {{include './common/header.art'}}
+    <!-- 主体内容 -->
+    <div class="content">
+        {{include './common/aside.art'}}
+
+        <div class="main">
+            <!-- 分类标题 -->
+            <div class="title">
+                <h4>演讲录音上传</h4>
+            </div>
+            <!-- /分类标题 -->
+            <form class="form-container" action="{{link}}" method="post"  enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>演讲主题: </label>
+                    <input class="form-control" type="text" autofocus placeholder="活动名称" name="title">
+                </div>
+                <div class="form-group">
+                    <label>演讲上传人</label>
+                    <input name="author"  type="text" class="form-control" readonly value="{{userInfo.username}}">
+                </div>
+                  <div class="form-group">
+                    <label>演讲者姓名</label>
+                    <input name="presenter"  type="text" class="form-control" name="presenter">
+                </div>
+                <div class="form-group">
+                    <label>演讲开始时间:</label>
+                   <input class="form-control"  type="datetime-local"  name="startTime">
+                </div>               
+                 <div class="form-group">
+                    <label>演讲结束时间:</label>
+                   <input class="form-control"  type="datetime-local"  name="endTime">
+                </div>
+                <div class="form-group">
+                <label for="exampleInputFile">演讲音频</label>
+                <input type="file" name="cover" id="file" mutiple>
+                <div class="thumbnail-waper">
+                    <audio class="img-thumbnail" src="{{audioText&&audioText.cover}}" id="preview">
+                </div>
+                </div>
+                <div class="form-group">
+                    <label>演讲描述</label>
+                    <textarea name="content"  value="{{audioText&&audioText.content}}" class="form-control" id="editor">{{audioText&&audioText.content}}</textarea>
+                </div>
+                <div class="buttons">
+                    <input type="submit" class="btn btn-primary" value="提交">
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- /主体内容 -->
+{{/block}}
+
+{{block 'script'}}
+        <script src="/admin/lib/jquery/dist/jquery.min.js"></script>
+        <script src="/admin/lib/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/admin/lib/ckeditor5/ckeditor.js"></script>
+        <script type="text/javascript">
+            $(function(){
+                $('#have').change(function(){
+                    $(".ab").each(function(i,domEle){
+                        if($(domEle).css('display')=='none'){
+                          $(domEle).css("display",'block');
+                        }else{
+                          $(domEle).css("display",'none');
+                        }
+                    });
+                })
+            
+            let editor;
+
+            ClassicEditor
+                    .create( document.querySelector('#editor'))
+                    .then(newEditor => {
+                        editor = newEditor;
+                    })
+                    .catch( error => {
+                        console.error( error );
+                    });
+
+            // 获取数据
+            // const editorData = editor.getData();
+        var preview = document.querySelector('#preview');
+        var file = document.querySelector('#file');
+        file.onchange = function(){
+            var reader = new FileReader();
+            reader.readAsDataURL(this.files[0]);
+            reader.onload = function(){
+                console.log(reader.result);
+                preview.src = reader.result;
+            }
+        }
+        })
+        </script>
+    {{/block}}

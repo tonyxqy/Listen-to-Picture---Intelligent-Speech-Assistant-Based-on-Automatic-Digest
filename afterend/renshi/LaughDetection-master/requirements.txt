@@ -1,0 +1,16 @@
+tensorflow==1.2.1 -i https://pypi.tuna.tsinghua.edu.cn/simple/
+six==1.11.0 -i https://pypi.tuna.tsinghua.edu.cn/simple/
+matplotlib==2.0.2 -i https://pypi.tuna.tsinghua.edu.cn/simple/
+numpy==1.13.1 -i https://pypi.tuna.tsinghua.edu.cn/simple/
+Keras==2.0.6 -i https://pypi.tuna.tsinghua.edu.cn/simple/
+pandas==0.20.3 -i https://pypi.tuna.tsinghua.edu.cn/simple/
+scipy==1.5.4 -i https://pypi.tuna.tsinghua.edu.cn/simple/
+phue==1.0 -i https://pypi.tuna.tsinghua.edu.cn/simple/
+plotly==2.5.1 -i https://pypi.tuna.tsinghua.edu.cn/simple/
+dash==0.21.0 -i https://pypi.tuna.tsinghua.edu.cn/simple/
+dash_core_components==0.22.1 -i https://pypi.tuna.tsinghua.edu.cn/simple/
+dash_html_components==0.10.0 -i https://pypi.tuna.tsinghua.edu.cn/simple/
+pyaudio==0.2.11 -i https://pypi.tuna.tsinghua.edu.cn/simple/
+resampy==0.2.0 -i https://pypi.tuna.tsinghua.edu.cn/simple/
+h5py==2.7.1 -i https://pypi.tuna.tsinghua.edu.cn/simple/
+dash-renderer==0.12.1 -i https://pypi.tuna.tsinghua.edu.cn/simple/

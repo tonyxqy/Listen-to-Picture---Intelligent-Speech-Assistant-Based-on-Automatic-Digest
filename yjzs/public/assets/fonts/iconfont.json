@@ -1,0 +1,37 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1881554",
+      "name": "企业图谱",
+      "font_class": "qiyetupu",
+      "unicode": "e662",
+      "unicode_decimal": 58978
+    },
+    {
+      "icon_id": "11405797",
+      "name": "思维导图",
+      "font_class": "icon-test",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "18170145",
+      "name": "麦克风,声音,录音,录制声音",
+      "font_class": "record-sound",
+      "unicode": "e971",
+      "unicode_decimal": 59761
+    },
+    {
+      "icon_id": "27585565",
+      "name": "课程大纲",
+      "font_class": "kechengdagang",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    }
+  ]
+}

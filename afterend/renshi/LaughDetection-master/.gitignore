@@ -1,0 +1,10 @@
+secret_data/*
+secret_models/*
+secret_notebooks/*
+audioset/*
+.DS_Store
+.idea/
+.ipynb_checkpoints/
+*.ckpt
+*.npz
+*.pyc

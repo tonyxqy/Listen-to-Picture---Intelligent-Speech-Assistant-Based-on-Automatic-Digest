@@ -1,0 +1,6 @@
+{
+  "architectures": [
+    "ElectraModel"
+  ],
+  "model_type": "electra"
+}
