@@ -110,14 +110,7 @@ export default {
       let timer = window.setInterval(() => {
         that.loading = true;
         this.lunxun();
-      }, 3000);
-      // this.$on('hook:activated', () => {
-      //   if (timer === null) { // 避免重复开启定时器
-      //     timer = window.setInterval(() => {
-      //       this.lunxun();
-      //     }, 3000)
-      //   }
-      // })
+      }, 5000);
       this.$on("hook:deactivated", () => {
         window.clearInterval(timer);
         timer = null;

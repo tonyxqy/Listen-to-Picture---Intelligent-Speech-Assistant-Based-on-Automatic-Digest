@@ -6,6 +6,7 @@ import numpy
 import json
 import jieba.analyse
 from math import sqrt
+import sys
 
 class key_text:
     def __init__(self):
@@ -300,12 +301,12 @@ def format_json(text):
     formatted={"downward":None}
     formatted["downward"]={"direction":"downward","name":"origin","content":text,"children":[]}
     def fill(maplist,content):
-        ttl=texttiling(stopwords=r'./stopwords.txt')
+        ttl=texttiling(stopwords=r'C:\Users\tony5\Desktop\cxcy\afterend\renshi\Textling\stopwords.txt')
         paragraphs=ttl.tokenize(content)
         for paragraph in paragraphs:
             dictionary={}
             keyword=jieba.analyse.extract_tags(paragraph,1) 
-            dictionary["name"]=keyword
+            dictionary["name"]=keyword[0]
             dictionary["logic"]=None
             dictionary["hasHumanholding"]=True
             dictionary["content"]=paragraph
@@ -328,13 +329,13 @@ def format_json(text):
             maplist.append(dictionary)
     fill(formatted["downward"]["children"],text)
     return formatted
-
 if __name__=='__main__':
-    ttl=texttiling(stopwords=r'./stopwords.txt')
-    text=open(r"./Why.txt",'r',encoding='utf-8').read()
+    ttl=texttiling(stopwords=r'C:\Users\tony5\Desktop\cxcy\afterend\renshi\Textling\stopwords.txt')
+    print(sys.argv[1])
+    text=open(sys.argv[1],'r',encoding='utf-8').read()
     formatted=format_json(text)
-    print(formatted)
-    with open(r".\paragraph.txt",'w',encoding='utf-8') as dst:
+    # print(formatted)
+    with open("C:\\Users\\tony5\\Desktop\\cxcy\\afterend\\renshi\\Textling\\paragraph.txt",'w',encoding='utf-8') as dst:
         json.dump(formatted,dst)
     # with open(r".\formatted.txt",'w',encoding='utf-8') as dst:
     #     dst.write(str(formatted))

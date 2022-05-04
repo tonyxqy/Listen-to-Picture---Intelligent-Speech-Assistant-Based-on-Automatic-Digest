@@ -30,10 +30,15 @@
         </div>
       </div>
     </div>
+    <div id="treecontainer" class="treecontainer">
+        <div id="product_tree"></div>
+    </div>
   </section>
 </template>
 <script>
 import axios from "axios";
+import { getTreeData } from "@/../public/assets/js/tree"
+
 export default {
   data() {
     return {
@@ -67,33 +72,57 @@ export default {
         newPage.document.write(response.data);
       });
     },
-  getswdt() {
+    getswdt() {
       this.loading = true;
       var that = this;
       this.uploaddata.id = JSON.parse(localStorage.getItem("upload"));
-      console.log(this.uploaddata);
+      // console.log(this.uploaddata);  
       axios({
         method: "POST",
         url: "http://localhost:3000/admin/getswdt",
         headers: {
           key: "Content-Type",
-          value: "application/x-www-form-urlencoded",
+          responseType: "application/json",
+          value: "application/json",
           type: "text"
         },
         data: that.uploaddata
       }).then(response => {
-        console.log(response);
+        console.log(response.data);
         this.loading = false;
-        // var newPage = window.open("about:blank", "_blank");
-        // //将后台传过来的html页面写到新打开的浏览器窗口中显示
-        // newPage.document.write(response.data);
+        let rootData = response.data;
+        console.log('test',rootData);
+        console.log('testinside',rootData.downward);
+        getTreeData(rootData);
       });
+      // axios({
+      //   method: "POST",
+      //   url: "http://localhost:3000/admin/getswdt",
+      //   headers: {
+      //     key: "Content-Type",
+      //     responseType: "arraybuffer",
+      //     value: "application/x-www-form-urlencoded",
+      //     type: "text"
+      //   },
+      //   data: that.uploaddata
+      // }).then(response => {
+      //   console.log(response);
+      //   this.loading = false;
+      //   var x = new Uint8Array(response.data);
+      //   var str = new TextDecoder("gbk").decode(x);
+      //   console.log(str);
+      //   let rootData = response.data;
+      //   console.log(rootData);
+      //   var child = document.getElementById("product_tree");
+      //   child.innerHTML = "";
+      //   getTreeData(rootData);
+      // });
     }
   }
 };
 </script>
 
-<style scoped>
+<style  scoped>
 @font-face {
   font-family: "iconfont";
   src: url("../../../public/assets/fonts/iconfont.ttf?t=1651225309570")
@@ -106,4 +135,40 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+ .container{
+box-sizing: border-box;
+width: 100%;
+height: 100%;
+padding-top:15px;
+overflow:hidden;
+background: #fff;
+}
+svg {
+cursor: all-scroll;
+}
+
+.centralText {
+    font: 23spx sans-serif;
+    fill: #222;
+}
+ 
+.downwardNode text,
+.upwardNode text {
+    font: 10px sans-serif;
+}
+ 
+.downwardLink {
+    fill: none;
+    stroke: #8b4513;
+    stroke-width: 1px;
+    opacity: 0.5;
+}
+ 
+.upwardLink {
+    fill: none;
+    stroke: #37592b;
+    stroke-width: 1px;
+    opacity: 0.5;
+}
+ 
 </style>

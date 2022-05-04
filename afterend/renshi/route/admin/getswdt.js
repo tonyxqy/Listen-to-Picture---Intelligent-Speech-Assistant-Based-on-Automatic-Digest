@@ -16,7 +16,12 @@ module.exports = (req, res) => {
     `python ./Textling/duplicate.py ${Dir}`,
     function (error, stdout, stderr) {
       if (stdout.length > 1) {
-        console.log(stdout);
+        console.log(req.body.id);
+        fs.readFile("C:\\Users\\tony5\\Desktop\\cxcy\\afterend\\renshi\\Textling\\paragraph.txt", "utf-8", (err, data) => {
+          if (err) throw err;
+          // console.log(data);
+        res.send(data)
+        });
       } else {
         console.log("you don't offer args");
       }

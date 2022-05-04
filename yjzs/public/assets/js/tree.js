@@ -1,32 +1,39 @@
-var container;
-var zoom;
-var rootData;
-var depthInfo;
-var rootName;//根节点名称
+// var container;
+// var zoom;
+// var rootData;
+// var depthInfo;
+// var rootName;//根节点名称
 var getTreeData =function(rootData) {
 // 测试内容
-console.log(rootData);
-rootName = '时间的朋友';
+// console.log(rootData);
+window.container;
+window.zoom;
+window.rootData;
+window.depthInfo;
+window.rootData = rootData;
+window.rootName = '时间的朋友';
 drawing();
 };
 var	drawing = function() {
-var _this = this;
+let _this = this;
+// console.log('tree的this',_this)
     // var rootName = ''; //根节点的名字
 var rootRectWidth = 0; //根节点rect的宽度
 var forUpward = true;
+
 var treeChart = function(d3Object) {
 this.d3 = d3Object;
-console.log('d3',this.d3);
 this.directions = ['downward'];
 };
-
 
 treeChart.prototype.drawChart = function() {
 // First get tree data for both directions.
 this.treeData = {};
 var self = this;
+console.log(self);
+console.log(_this.rootData);
 self.directions.forEach(function(direction) {
-    self.treeData[direction] = _this.rootData[direction];
+  self.treeData[direction] = _this.rootData[direction];
   });
 //   rootName = '时间的朋友';
   rootRectWidth = _this.rootName.length * 25;
@@ -42,7 +49,6 @@ var treeConfig = {
     'left': 5
   }
 }
-
 treeConfig.chartWidth = (2000 - treeConfig.margin.right - treeConfig.margin.left);
 treeConfig.chartHeight = (800 - treeConfig.margin.top - treeConfig.margin.bottom);
 treeConfig.centralHeight = treeConfig.chartHeight / 2;
@@ -53,8 +59,6 @@ return treeConfig;
 };
 
 treeChart.prototype.graphTree = function(config) {
-  
-
 var self = this;
 var d3 = this.d3;
 var linkLength = config.linkLength;
@@ -85,7 +89,6 @@ var svg = d3.select('#product_tree')
    var treeG = svg.append('g')
   .attr('class', 'gbox')
   .attr('transform', 'translate(' + config.margin.left + ',' + config.margin.top + ')');
-
 //箭头
 var markerDown = svg.append("marker")
   .attr("id", "resolvedDown")
@@ -101,12 +104,12 @@ var markerDown = svg.append("marker")
   .append("path")
   .attr("d", "M0,-5L10,0L0,5") //箭头的路径
   .attr('fill', '#000'); //箭头颜色  
-
 // Initialize the tree nodes and update chart.
 
 for(var d in this.directions) {
   var direction = this.directions[d];
   var data = self.treeData[direction];
+  console.log(data);
     if (typeof(data) != "undefined") {
       data.x0 = config.centralHeight;
       data.y0 = config.centralWidth;
@@ -121,14 +124,12 @@ function update(source, originalData, g) {
   var link_class = direction + 'Link';
   var downwardSign =1;
   var nodeColor = '#8b4513';
-
   var isExpand = true;
   var nodeSpace = 160;
   var tree = d3.layout.tree().sort(sortByDate).nodeSize([nodeSpace, 0]);
   var nodes = tree.nodes(originalData);
   var links = tree.links(nodes);
   var offsetY = -config.centralHeight;
-  
    nodes.forEach(function(d) {
     d.y = downwardSign * (d.depth * linkLength) + config.centralWidth;
     d.x = d.x - offsetY;
@@ -486,19 +487,19 @@ var funLine = function(obj) {  //折线
     return "M"+sy+","+s.x+"L"+(sy+(ty-sy)/2)+","+s.x+"L"+(sy+(ty-sy)/2)+","+t.x+"L"+ty+","+t.x;
 }  
 var downloadfun = function() { //下载
+ 
 // 注释该方法为svg 直接下载
- var SvgSaver = require('svgsaver');                 // if using CommonJS environment
- var svgsaver = new SvgSaver();                      // creates a new instance
- var svg = document.querySelector('#product_tree');         // find the SVG element
- svgsaver.asSvg(svg);                                // save as SVG
+//  var SvgSaver = require('svgsaver');                 // if using CommonJS environment
+//  var svgsaver = new SvgSaver();                      // creates a new instance
+//  var svg = document.querySelector('#product_tree');         // find the SVG element
+//  svgsaver.asSvg(svg);                                // save as SVG
 
 var g = document.getElementById('product_tree').getElementsByTagName('g')[0].getBBox();
 var gbox = document.getElementById('product_tree').getElementsByClassName('gbox')[0];
 var x = -g.x;//计算偏移位置
 var y = -g.y;
 gbox.style.transform = "translate(" + x + 'px' + "," + y + "px" + ")  scale(1)"; //偏移位置
-var svgbox = document.querySelector('#product_tree svg')
-console.log(svgbox);
+var svgbox = document.getElementById('product_tree svg')
 var boxwidth = svgbox.width;
 var boxheight = svgbox.height;
 svgbox.attr('width', g.width)
@@ -534,6 +535,9 @@ gbox.style.transform = ''
 // svgbox.attr('height',boxheight)
 svgbox.attr('width',1100)
 svgbox.attr('height',600)
-
 // 结束
 } 
+
+module.exports = {
+  getTreeData
+}
