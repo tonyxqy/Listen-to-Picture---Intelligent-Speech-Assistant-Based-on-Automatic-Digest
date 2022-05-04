@@ -247,9 +247,12 @@ function update(source, originalData, g) {
     .attr("class", "linkname")
     .style("fill", "#7F7F7F")
     .style('font-size', 10)
+    .style('white-space', 'pre-wrap')
+    .style('width', 150)
+    .style('height', 80)
     .text(function(d) { 
       var str = (d.name == 'origin') ? '' :d.detail; 
-      return(str.length > 13) ? str.substr(0, 13) + ".." : str;
+      return(str.length > 13) ? str.substr(0, 13) + '..' : str;
     });
   nodeEnter.append("text")
     .attr("x", "30")

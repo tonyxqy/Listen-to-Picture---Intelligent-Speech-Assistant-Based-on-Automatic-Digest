@@ -48,7 +48,8 @@
       </div>
     </div>
     <el-dialog title="笑声检测" :visible.sync="dialogVisible" width="30%" :before-close="handleClose"  v-loading="xsjcloading">
-      <span style="color:black">{{xsjcdata}}</span>
+      <span style="color:black">您的音频笑声检测程度为{{xsjcdata}}</span>
+      <span style="margin-top:10px; padding:0 5px">我们团队提出了一种从听者角度进行演讲效果评价的方式——以笑声进行评价。考虑到人们发出笑声更多的是一种发自内心的无意识行为，同时注意到伴随着年纪的增大，人们更多地倾向于隐藏声音而只露出笑容作为礼貌的体现，因此笑出声的场景就显得弥足珍贵。因此我们认为，笑声相对于演讲总时长而言所占的比例与笑声的音量理应作为人们在评判演讲是否成功的一个有力标准，这一标准作为“好的演讲”的充分条件，并没有将“主题并不以快乐为核心”的演讲的价值进行否定，而是更多地作为一种补充，来帮助人们来评判这次演讲是否是一次好的演讲。</span>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
       </span>

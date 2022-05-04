@@ -1,4 +1,5 @@
 import enum
+from pickle import TRUE
 import re
 from tkinter.tix import Tree
 import jieba
@@ -7,7 +8,6 @@ import json
 import jieba.analyse
 from math import sqrt
 import sys
-
 class key_text:
     def __init__(self):
         pass
@@ -70,12 +70,13 @@ class texttiling:
         self.window_width=window_width        #用于平滑各个分隔的评分曲线的窗口大小;
         self.stopwords=stopwords
 
-    def tokenize(self,text):
+    def tokenize(self,text,minlength,top):
         '''
         将文本基于Texttiling算法分段,并返回分段结果.
         '''
+        self.top=top
         # text=text.replace("\n","")
-        origin_sentences=self.divide_into_sentences(text)
+        origin_sentences=self.divide_into_sentences(text,minlength)
         text_without_punction=self.filter_punctuation(text)
         pseud_list=self.create_pseudosentence(text_without_punction,self.stopwords)
         tokenmap=self.create_tokenmap(pseud_list,origin_sentences)
@@ -87,7 +88,7 @@ class texttiling:
         return self.nomalize(text,boundary,origin_sentences,pseud_list)
 
 
-    def divide_into_sentences(self,text,minlength=100):#ok
+    def divide_into_sentences(self,text,minlength):#ok
         '''
         将文本根据文章的原始段落分段,段落字数不够100字的将与其他段落合并;
         返回值的格式为整型列表,其中的数字表示各个分段在原始文本中的起始位置;
@@ -258,9 +259,10 @@ class texttiling:
         hp=list(filter(lambda x:x[0]>cutoff,depthTuple))
         for dt in hp:
             boundaries[dt[1]]=1
-            for dt2 in hp:  #如果在当前边界附近已经存在边界,则此边界不作数.
-                if dt[1]!=dt2[1] and abs(dt2[1]-dt[1])<4 and boundaries[dt2[1]]==1:
-                    boundaries[dt[1]]=0
+            if self.top:
+                for dt2 in hp:  #如果在当前边界附近已经存在边界,则此边界不作数.
+                    if dt[1]!=dt2[1] and abs(dt2[1]-dt[1])<6 and boundaries[dt2[1]]==1:
+                        boundaries[dt[1]]=0
         return boundaries
 
     def nomalize(self,text,boundaries,sentences,pseud):
@@ -300,9 +302,9 @@ def format_json(text):
     text=text.replace("\n","")
     formatted={"downward":None}
     formatted["downward"]={"direction":"downward","name":"origin","content":text,"children":[]}
-    def fill(maplist,content):
+    def fill(maplist,content,minlength,top):
         ttl=texttiling(stopwords=r'C:\Users\tony5\Desktop\cxcy\afterend\renshi\Textling\stopwords.txt')
-        paragraphs=ttl.tokenize(content)
+        paragraphs=ttl.tokenize(content,minlength,top)
         for paragraph in paragraphs:
             dictionary={}
             keyword=jieba.analyse.extract_tags(paragraph,1) 
@@ -313,21 +315,20 @@ def format_json(text):
             dictionary["detail"]=extracter.solve(paragraph)
             dictionary["hasChildren"]=True
             try:
-                sub=ttl.tokenize(paragraph)
+                sub=ttl.tokenize(paragraph,16,False)
             except ValueError:
                 dictionary["hasChildren"]=False
                 sub=[]
             if len(sub)<2:
                 dictionary["hasChildren"]=False
             dictionary["isExpand"]=True
-            
             if dictionary["hasChildren"]:
                 dictionary["children"]=[]
-                fill(dictionary["children"],paragraph)
+                fill(dictionary["children"],paragraph,16,False)
             else:
                 dictionary["children"]=None
             maplist.append(dictionary)
-    fill(formatted["downward"]["children"],text)
+    fill(formatted["downward"]["children"],text,100,True)
     return formatted
 if __name__=='__main__':
     ttl=texttiling(stopwords=r'C:\Users\tony5\Desktop\cxcy\afterend\renshi\Textling\stopwords.txt')
